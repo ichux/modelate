@@ -65,16 +65,29 @@ for this application to work on Windows!
 5. `flask run`
 
 ## Migrations
-* [manage.py](./manage.py) allows you to run the following
-    - ```python manage.py dbi```
-    - ```python manage.py dbm```
-    - ```python manage.py dbr```
-    - ```python manage.py dbu_sql```
-    - ```python manage.py dbu_no_sql```
+* [manage.py](./manage.py) allows you to run the following:
+    - ```python manage.py dbi[dbm][dbr][dbu_sql][dbu_no_sql][drop_pg_tables]```
+    - ```python manage.py sitemap[locate_route][bits_256][shell]``` amongst others
 * For best results with `alembic/flask-migrate`, use only *alphanumberic* characters for your DB username and passwords!
 * You can alter the [manage.py](./manage.py) file to taste.
 * The initial assumption will have you to have migrations that are easy to follow through, e.g. serial numbering
 * When you need to make your own `sql statements` or `revisions`, use `python manage.py dbr`
+
+> After you add a model, `import it` within the [manage.py](./manage.py) and then run your migration(s).
+
+## Alembic
+* [Learn more](http://alembic.zzzcomputing.com/en/latest/ops.html)
+* [Limitations](http://alembic.zzzcomputing.com/en/latest/autogenerate.html#what-does-autogenerate-detect-and-what-does-it-not-detect)
+* By default, alembic does not track column type changes. But you can achieve this by setting
+`compare_type=True` in `env.py`. e.g.
+
+```
+context.configure(connection=connection,
+                      target_metadata=target_metadata,
+                      process_revision_directives=process_revision_directives,
+                      compare_type=True,  # add this line
+                      **current_app.extensions['migrate'].configure_args)
+```
 
 ## To run tests
 * Stay within the directory that houses the `modelate` folder and type the following:
@@ -85,3 +98,6 @@ for this application to work on Windows!
 * It will be a good practise if you used the same type of DB for your development, test or live. This will ensure that
 you can replicate problems, if need be.
 * Variables for test come within the file [variables.sh](bash/test/variables.sh)
+
+## Tidbits
+Check out [tidbits.txt](./tidbits.txt) for extra information that could come in handy for you when you code.

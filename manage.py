@@ -1,11 +1,14 @@
 import os
+import secrets
 import time
 from datetime import datetime
+from urllib.parse import unquote
 
 from flask_migrate import init, migrate, revision, upgrade
-from flask_script import Shell
+from flask_script import Shell, prompt_bool
 
 from modelate import manager, app, db
+from modelate.models import QueryPostgres
 from modelate.models.profiling import User
 
 
@@ -75,6 +78,83 @@ def dbu_no_sql():
     :return: None
     """
     upgrade()
+
+
+# noinspection SqlDialectInspection
+@manager.command
+def drop_pg_tables(namespace="'public'"):
+    """For dropping Postgres the tables."""
+    status = os.environ.get('SERVER_STATUS')
+    if status != 'live':  # status != 'production' or
+        if prompt_bool("Are you sure you want to lose all DB data?\n'y', 'yes', '1', 'on', 'true', 't' "
+                       "OR 'n', 'no', '0', 'off', 'false', 'f': "):
+
+            db.engine.echo = True
+            tables = QueryPostgres.get_postgres_tables(namespace)
+
+            if tables:
+                with db.engine.connect() as connection:
+                    connection.execute(f"DROP TABLE {', '.join(tables)} CASCADE")
+                    print('all tables have been dropped')
+        else:
+            print('\n*** You cancelled the operation ***')
+    else:
+        print('\n*** You can not drop_all on PRODUCTION server! What were you thinking?***')
+
+
+@manager.command
+def sitemap():
+    """
+    List all the site maps of your application
+    :return: None
+    """
+    output = []
+    for rule in app.url_map.iter_rules():
+
+        options = {}
+        for arg in rule.arguments:
+            options[arg] = "[{0}]".format(arg)
+
+        methods = ','.join(rule.methods)
+        output.append(unquote(f"{rule.endpoint:30s} {methods:25s} {rule}"))
+
+    for _ in sorted(output):
+        print(_)
+
+
+@manager.command
+def locate_route(check):
+    """
+    Based on what you probably got from using `sitemap` function, narrow down to a route with this function
+    :param check: value to check if it's in a route
+    :return: None
+    """
+    output = []
+    for rule in app.url_map.iter_rules():
+
+        options = {}
+        for arg in rule.arguments:
+            options[arg] = "[{0}]".format(arg)
+
+        methods = ','.join(rule.methods)
+
+        if check in rule.endpoint:
+            output.append(unquote(f"{rule.endpoint:30s} {methods:25s} {rule}"))
+
+    for _ in sorted(output):
+        print(_)
+
+
+@manager.command
+def bits_256():
+    """
+    Generate a random number of length 256 bits
+    :return: number
+    """
+    # import Crypto.Random.random
+    # print(Crypto.Random.random.getrandbits(256))
+
+    print(secrets.randbits(256))
 
 
 if __name__ == '__main__':

@@ -1,0 +1,5 @@
+# exit tmux: Ctrl + d
+# detach tmux: Ctrl + b, d
+# split horizontal: Ctrl + b, "
+# split vertical: Ctrl + b, %
+# list tmux: tmux ls

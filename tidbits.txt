@@ -1,0 +1,25 @@
+###
+Within Alembic, you can modify the migration to include these changes e.g. in your migration file
+
+from alembic import op
+import sqlalchemy as sa
+
+def upgrade():
+    # ...
+    op.alter_column('downloads', 'size', existing_type=sa.Integer(), type_=sa.BigInteger())
+
+def downgrade():
+    # ...
+    op.alter_column('downloads', 'size', existing_type=sa.BigInteger(), type_=sa.Integer())
+###
+How `modelate` development DB was created:
+
+sudo -u postgres createuser -S -D -R -P modelate  # password = M0d3l4t3
+sudo -u postgres createdb -O modelate modelate -E utf-8
+sudo adduser modelate # password = M0d3l4t3
+###
+How `modelate` test DB was created:
+
+sudo -u postgres createuser -S -D -R -P modelate_test  # password = M0d3l4t3T35T
+sudo -u postgres createdb -O modelate_test modelate_test -E utf-8
+sudo adduser modelate_test # password = M0d3l4t3T35T
