@@ -1,7 +1,6 @@
-import sys
-
 import logging
 import os
+import sys
 from functools import wraps
 
 log = logging.getLogger(__name__)
@@ -37,5 +36,6 @@ def primer():
 
     # DB type
     assert os.getenv('DB_TYPE'), "DB_TYPE is missing"
+
 
 primer()

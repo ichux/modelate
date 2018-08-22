@@ -8,8 +8,6 @@
 import datetime
 import os
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-
 POSTGRES_DB = os.getenv('POSTGRES_DB')
 POSTGRES_HOST = os.getenv('POSTGRES_HOST')
 POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD')
@@ -65,7 +63,7 @@ class Config(object):
     # }
 
     # work mail settings
-    GPAY_EMAIL_SETTINGS = {
+    SMTP_EMAIL_SETTINGS = {
         'email_from': os.getenv('EMAIL_FROM'),
         'email_smtp': os.getenv('EMAIL_SMTP'),
         'email_username': os.getenv('EMAIL_USERNAME'),
@@ -197,4 +195,16 @@ class TestConfig(Config):
     DEBUG = False
     TESTING = True
 
-    SQLALCHEMY_BINDS = {'readonly': 'sqlite:///:memory:'}
+    POSTGRES_INTERNAL = f'{POSTGRES_USERNAME}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}'
+    SQLALCHEMY_DATABASE_URI = f"postgresql://" + POSTGRES_INTERNAL
+    SQLALCHEMY_BINDS = {'readonly': f"postgresql://" + POSTGRES_INTERNAL}
+
+    # celery configurations
+    REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
+    REDIS_DB_NO, REDIS_HOST, REDIS_PORT = 0, "192.168.56.20", 6379
+
+    CELERY_BROKER_URL = f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB_NO}'
+    CELERY_RESULT_BACKEND = f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB_NO}'
+    SESSION_WITH_REDIS = {"host": REDIS_HOST, "port": REDIS_PORT, "db": REDIS_DB_NO, "password": REDIS_PASSWORD}
+
+    RECAPTCHA_ENABLED = False

@@ -11,16 +11,14 @@ set_env_variables()
 from modelate import app
 
 
-class APITest(unittest.TestCase):
+class FrontendTest(unittest.TestCase):
     def setUp(self):
-        self.post = {'REQUEST_METHOD': 'POST'}
+        self.get = {'REQUEST_METHOD': 'GET'}
 
     def test_index(self):
-        data = json.dumps({'name': 'ichux'})
-
-        request = Request.blank('/api/v1.0', content_type='application/json', environ=self.post, POST=data)
+        request = Request.blank('/', environ=self.get)
         response = request.get_response(app)
-        self.assertEqual(response.json['result']['message']['name'], "ichux")
+        self.assertIn("Index for Frontend", response.text)
 
 
 if __name__ == '__main__':
