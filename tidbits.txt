@@ -23,3 +23,9 @@ How `modelate` test DB was created:
 sudo -u postgres createuser -S -D -R -P modelate_test  # password = M0d3l4t3T35T
 sudo -u postgres createdb -O modelate_test modelate_test -E utf-8
 sudo adduser modelate_test # password = M0d3l4t3T35T
+###
+Playing with `git`
+git remote -v
+git remote set-url origin https://ichux@bitbucket.org/ichux/modelate.git
+git remote -v
+cat .git/config
