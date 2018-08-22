@@ -1,6 +1,8 @@
-## Flask Bootstrap
-This is a model project to bootstrap and advanced flask application. If tries as much as it can to avoid
-`cyclic redundancy` and the `factory method` that is popular amongst Flask developers.
+## Modelate: Flask Bootstrapping Application
+This is a model project to bootstrap any flask application: advanced or not. If tries as much as it can to avoid
+`cyclic redundancy` and the `factory method` that is popular among Flask developers.
+
+`modelate` == `MODEL templATE`
 
 ## bootstrap.py
 * The file [bootstrap.py](modelate/bootstrap.py) ensures that *all necessary environment variables* are
@@ -49,16 +51,16 @@ The section, *migrations*, will properly explain this part
 The following have been prepared as default:
 * A Mac was used during development while the production environment was Ubuntu. You might need to alter some variables
 for this application to work on Windows!
-* Alter the [variables.sh](bash/dev/variables.sh) to taste
-* Change your the `/Users/chukwudinwachukwu/PycharmProjects/modplate`, as contained in the bash files to taste
-* Remember to run `chmod +x ...` on the bash files on your local PC
+* Alter the [variables.sh](bash/dev/variables.sh) to taste.
+* Change `/Users/chukwudinwachukwu/PycharmProjects/modplate`, as contained in the bash files to taste
+* Remember to run `chmod +x ...` on the bash files on your local PC..
 * A bash folder contains some bash scripts that you can work with to bootstrap the necessary variables et al.
 
 ## Steps to run this application
-1. `git clone https://ichux@bitbucket.org/ichux/flask-bootstrap.git`
+1. `git clone https://ichux@bitbucket.org/ichux/modelate.git`
 2. Create a virtual environment
     - activate it
-    - *cd* into the cloned repository, `cd flask-bootstrap`
+    - *cd* into the cloned repository, `cd modelate`
     - run ```pip install -r requirements.txt```
 3. Properly set your variables within [variables.sh](bash/dev/variables.sh) to taste.
 4. `source bash/dev/bootstrap.sh`
@@ -101,3 +103,5 @@ you can replicate problems, if need be.
 
 ## Tidbits
 Check out [tidbits.txt](./tidbits.txt) for extra information that could come in handy for you when you code.
+
+MIT © [ichux](https://www.linkedin.com/in/ichux)
