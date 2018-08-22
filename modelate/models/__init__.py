@@ -21,6 +21,22 @@ ROS = ReadOnly.session()
 ROS_BASE_CLASS = ReadOnly.base_class
 
 
+class QueryPostgres(object):
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def get_postgres_tables(namespace):
+        sql = ("SELECT c.relname FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace "
+               f"WHERE n.nspname = {namespace} AND c.relkind = 'r'")
+
+        with db.engine.connect() as connection:
+            tables = [_[0] for _ in connection.execute(sql)]
+            if tables:
+                return [_ for _ in tables]
+            return []
+
+
 class RollBackAndFlush(object):
     def __init__(self):
         pass
