@@ -74,6 +74,8 @@ for this application to work on Windows!
 * You can alter the [manage.py](./manage.py) file to taste.
 * The initial assumption will have you to have migrations that are easy to follow through, e.g. serial numbering
 * When you need to make your own `sql statements` or `revisions`, use `python manage.py dbr`
+* Your migration might not work if you already have tables in the DB from a previous migration that also appear in your
+present migration
 
 > After you add a model, `import it` within the [manage.py](./manage.py) and then run your migration(s).
 
@@ -104,4 +106,18 @@ you can replicate problems, if need be.
 ## Tidbits
 Check out [tidbits.txt](./tidbits.txt) for extra information that could come in handy for you when you code.
 
+
+
+****
+
+<p align="center">
+* * * *
+</p>
+
 MIT © [ichux](https://www.linkedin.com/in/ichux)
+
+<p align="center">
+* * * *
+</p>
+
+****
