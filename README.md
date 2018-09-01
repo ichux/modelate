@@ -109,15 +109,5 @@ Check out [tidbits.txt](./tidbits.txt) for extra information that could come in 
 
 
 ****
-
-<p align="center">
-* * * *
-</p>
-
 MIT © [ichux](https://www.linkedin.com/in/ichux)
-
-<p align="center">
-* * * *
-</p>
-
 ****
