@@ -39,7 +39,7 @@ this application.
 
 ## Steps to run this application
 1. Ensure you have docker/docker-compose installed on your OS of choice
-2. `git clone https://ichux@bitbucket.org/ichux/modelate.git`
+2. `git clone git@github.com:ichux/modelate.git`
 3. Type `make` and choose from the options it displays to bootstrap your application
 
 ## Migrations
