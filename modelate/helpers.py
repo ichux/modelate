@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 
-import math
-import time
-
 import datetime
 import filecmp
+import math
 import os
 import secrets
+import time
 import traceback
+from pprint import pprint
+from urllib.parse import urlparse, parse_qs
+
 from flask import request
 from flask_login import AnonymousUserMixin
-from pprint import pprint
 from sqlalchemy import MetaData
-from urllib.parse import urlparse, parse_qs
 
 convention = {
     "ix": 'ix_%(column_0_label)s',
@@ -29,7 +29,6 @@ def properties(flag):
 
 def parse_query(url):
     parsed_url = urlparse(url)
-    # print(parsed_url)
     return parse_qs(parsed_url.query)
 
 

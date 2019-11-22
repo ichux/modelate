@@ -1,18 +1,22 @@
-# -*- coding: utf-8 -*-
-"""
-    blueprint.modelate.config
-    ----------------------
-    A module providing all the configuration of the blueprint.
-"""
-
 import datetime
 import os
+
+MYSQL_DB = os.getenv('MYSQL_DB')
+MYSQL_HOST = os.getenv('MYSQL_HOST')
+MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
+MYSQL_USERNAME = os.getenv('MYSQL_USERNAME')
+MYSQL_PORT = os.getenv('MYSQL_PORT')
 
 POSTGRES_DB = os.getenv('POSTGRES_DB')
 POSTGRES_HOST = os.getenv('POSTGRES_HOST')
 POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD')
 POSTGRES_USERNAME = os.getenv('POSTGRES_USERNAME')
 POSTGRES_PORT = os.getenv('POSTGRES_PORT')
+
+REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
+REDIS_DB_NO = os.getenv('REDIS_DB_NO')
+REDIS_HOST = os.getenv('REDIS_HOST')
+REDIS_PORT = os.getenv('REDIS_PORT')
 
 
 # noinspection PyUnresolvedReferences
@@ -37,8 +41,6 @@ class Config(object):
     CASCADE = "all, delete-orphan"
     LAZY = 'joined'
 
-    ALLOWED_BOOK_EXTENSIONS = {'pdf', 'zip'}
-    ALLOWED_USERS_EXTENSIONS = {'csv', 'xlsx', 'xls'}
     FILE_SIZE = 70 * 1024 * 1024
     UPLOAD_BYTE_SIZE = 2 ** 20
 
@@ -84,15 +86,14 @@ class Config(object):
     RECAPTCHA_RTABINDEX = 10
 
     # celery configurations
-    REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
-    REDIS_DB_NO, REDIS_HOST, REDIS_PORT = 0, "192.168.56.20", 6379
-    CACHE_REDIS_URL = f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB_NO}'
+    CACHE_REDIS_URL = f"redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB_NO}"
     TTL_REDIS_BACKEND = 60
 
     # celery configurations
     CELERY_BROKER_URL = f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB_NO}'
     CELERY_RESULT_BACKEND = f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB_NO}'
     SESSION_WITH_REDIS = {"host": REDIS_HOST, "port": REDIS_PORT, "db": REDIS_DB_NO, "password": REDIS_PASSWORD}
+
     CELERYBEAT_SCHEDULE = {
         'every-10s': {
             # 'task': 'tasks.hello',
@@ -152,7 +153,7 @@ class DevelopmentConfig(Config):
 
     # celery configurations
     REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
-    REDIS_DB_NO, REDIS_HOST, REDIS_PORT = 0, "192.168.56.20", 6379
+    REDIS_DB_NO, REDIS_HOST, REDIS_PORT = 0, "127.0.0.1", 6379
 
     CELERY_BROKER_URL = f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB_NO}'
     CELERY_RESULT_BACKEND = f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB_NO}'
@@ -182,7 +183,7 @@ class LiveConfig(Config):
 
     # celery configurations
     REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
-    REDIS_DB_NO, REDIS_HOST, REDIS_PORT = 0, "192.168.56.20", 6379
+    REDIS_DB_NO, REDIS_HOST, REDIS_PORT = 0, "127.0.0.1", 6379
 
     CELERY_BROKER_URL = f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB_NO}'
     CELERY_RESULT_BACKEND = f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB_NO}'
@@ -201,7 +202,7 @@ class TestConfig(Config):
 
     # celery configurations
     REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
-    REDIS_DB_NO, REDIS_HOST, REDIS_PORT = 0, "192.168.56.20", 6379
+    REDIS_DB_NO, REDIS_HOST, REDIS_PORT = 0, "127.0.0.1", 6379
 
     CELERY_BROKER_URL = f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB_NO}'
     CELERY_RESULT_BACKEND = f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB_NO}'
