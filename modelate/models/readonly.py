@@ -24,8 +24,6 @@ class ReadOnly(object):
         # from sqlalchemy import create_engine
         # db_uri = app.config["SQLALCHEMY_BINDS"]["readonly"]
 
-        # TODO check what happens to the session 'READONLY_SESSION'
-
         """
         _setdefault('pool_size', 'SQLALCHEMY_POOL_SIZE')
         _setdefault('pool_timeout', 'SQLALCHEMY_POOL_TIMEOUT')
