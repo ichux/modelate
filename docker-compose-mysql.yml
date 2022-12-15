@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   redis:
-    image: 'redis:5.0.6'
+    image: redis/redis-stack
     restart: always
     container_name: modelate_redis
     command: redis-server --requirepass a3192f4d42bd
@@ -12,14 +12,11 @@ services:
       - '6369:6379'
 
   database:
-      image: mysql:latest
+      image: mysql:8.0.31-debian
       restart: always
       container_name: modelate_mysql
-      environment:
-        MYSQL_DATABASE: 'modelate'
-        MYSQL_USER: 'backend'
-        MYSQL_PASSWORD: 'd3c885805581'
-        MYSQL_ROOT_PASSWORD: '449a044bf647'
+      env_file:
+        - .env
       ports:
         - '3310:3306'
       volumes:
@@ -32,31 +29,8 @@ services:
       container_name: modelate_app
       volumes:
         - .:/code
-      environment:
-        FLASK_SKIP_DOTENV: 0
-        FLASK_APP: wsgi.py
-        FLASK_DEBUG: 1
-        FLASK_RUN_HOST: 0.0.0.0
-
-        SITE_NAME: modelate
-        SECRET_KEY: 5d5a4c4b57ac80297ec16c712fb17784557e
-        MODELATE_STATUS: modelate.config.DevelopmentConfig
-
-        REDIS_PASSWORD: a3192f4d42bd
-        REDIS_HOST: redis
-        REDIS_PORT: 6379
-        REDIS_DB_NO: 0
-
-        DB_TYPE: MYSQL
-
-        MYSQL_HOST: database
-        MYSQL_PORT: 3306
-        MYSQL_USERNAME: backend
-        MYSQL_PASSWORD: d3c885805581
-        MYSQL_DB: modelate
-
-        SQLALCHEMY_POOL_RECYCLE: 299
-        SQLALCHEMY_POOL_TIMEOUT: 20
+      env_file:
+        - .env
       ports:
         - '5000:5000'
       depends_on:
